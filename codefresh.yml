@@ -1,0 +1,9 @@
+steps:
+  build:
+    type: build
+    description: Build
+    image_name: chrisloggg/java-apps-test
+    build_arguments:
+      - NAME=${{CF_REPO_NAME}}
+      - DATE=${{CF_BUILD_TIMESTAMP}}
+    dockerfile: Dockerfile

